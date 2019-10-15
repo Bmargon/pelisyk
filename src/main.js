@@ -3,15 +3,18 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
-import * as firebase from "firebase/app";
 
 Vue.config.productionTip = false;
 //Vuelidate
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate);
+
 //Firebase
-import "firebase/auth";
-import "firebase/firestore";
+var firebase = require("firebase/app");
+
+// Add the Firebase products that you want to use
+require("firebase/auth");
+require("firebase/firestore");
 
 var firebaseConfig = {
     apiKey: "AIzaSyA70Ro-SvJvurdV8pFYxwUn6a1MHm1uI8k",
@@ -22,7 +25,9 @@ var firebaseConfig = {
     messagingSenderId: "78657656691",
     appId: "1:78657656691:web:ba60da6235b274ca875706"
 };
+
 firebase.initializeApp(firebaseConfig);
+export default firebase.firestore();
 
 new Vue({
     router,

@@ -2,16 +2,17 @@
     <div class="main">
         <v-card class="form">
             <h1>Crear nueva cuenta:</h1>
-            <v-form class="inputs">
-                <v-text-field v-model="$v.nombre.$model" label="Nombre" type="text"></v-text-field>
-                <v-text-field v-model="$v.apellidos.$model" label="Apellido/s" type="text"></v-text-field>
-                <v-text-field v-model="$v.email.$model" label="Email" type="email"></v-text-field>
-                <v-text-field v-model="$v.alias.$model" label="Alias" type="text"></v-text-field>
-                <v-text-field v-model="$v.pass.$model" label="Contraseña" type="password"></v-text-field>
-                <v-text-field v-model="$v.pass2.$model" label="Repita contraseña" type="password"></v-text-field>
+            <v-form @submit.prevent="crearUsuario" class="inputs">
+                <v-text-field v-model="$v.usuario.nombre.$model" label="Nombre" type="text"></v-text-field>
+                <v-text-field v-model="$v.usuario.apellidos.$model" label="Apellido/s" type="text"></v-text-field>
+                <v-text-field v-model="$v.usuario.email.$model" label="Email" type="email"></v-text-field>
+                <v-text-field v-model="$v.usuario.alias.$model" label="Alias" type="text"></v-text-field>
+                <v-text-field v-model="$v.usuario.pass.$model" label="Contraseña" type="password"></v-text-field>
+                <v-text-field v-model="$v.usuario.pass2.$model" label="Repita contraseña" type="password"></v-text-field>
+           
                 <div class="botones">
                     <v-btn :to="{name: 'signin'}" text small>Iniciar sesión</v-btn>                 
-                    <v-btn :disabled="$v.$invalid" small color="primary">Crear cuenta</v-btn>      
+                    <v-btn type="submit" :disabled="$v.$invalid" small color="primary">Crear cuenta</v-btn>      
                 </div>
             </v-form>
         </v-card>
@@ -22,26 +23,45 @@
 ///
 import { required, email, sameAs, minLength } from 'vuelidate/lib/validators';
 import swal from 'sweetalert';
+import firebase from 'firebase';
+var db = firebase.firestore();
 ///
 export default {
     name: 'SignUp',
     data () {
         return {
-            nombre: '',
-            apellidos: '',
-            email: '',
-            alias: '',
-            pass: '',
-            pass2: '',
+            usuario: {
+                nombre: '',
+                apellidos: '',
+                email: '',
+                alias: '',
+                pass: '',
+                pass2: ''
+            }
         }
     },
     validations: {
-            nombre: { required },
-            apellidos: { required },
-            email: { required, email},
-            alias: { required, minLength: minLength(5)},
-            pass: { required },
-            pass2: { required,  sameAs :sameAs('pass')}
+            usuario: {
+                nombre: { required },
+                apellidos: { required },
+                email: { required, email},
+                alias: { required, minLength: minLength(5)},
+                pass: { required },
+                pass2: { required,  sameAs :sameAs('pass')}
+            }
+    },
+    methods: {
+        crearUsuario(){
+            firebase.auth().createUserWithEmailAndPassword(this.usuario.email, this.usuario.pass).then( data => {
+                console.log(data);
+                db.collection(this.usuario.email).doc('perfil').set(this.usuario).then( () => {
+                }).catch(error => {
+                    console.log(error);
+                })
+            }).catch(error => {
+                console.log(error);
+            })
+        }
     }
 }
 </script>
