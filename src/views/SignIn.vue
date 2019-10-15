@@ -4,7 +4,7 @@
         <v-card class="form">
             <h1>Iniciar sesión:</h1>
             <!-- inputs -->
-             <v-form class="inputs">
+             <v-form class="inputs" @submit.prevent="acceder">
                  <v-text-field v-model="$v.email.$model" label="Email" type="email"></v-text-field>
                     <!-- Validaciones email -->
 
@@ -13,7 +13,7 @@
                  <!-- botones del form -->
                  <div class="botones">
                     <v-btn :to="{name: 'signup'}" text small>Registrarse</v-btn>                 
-                    <v-btn :disabled="$v.$invalid" small color="primary">Iniciar sesión</v-btn>      
+                    <v-btn :disabled="$v.$invalid" small color="primary" type="submit">Iniciar sesión</v-btn>      
                 </div>
              </v-form>
         </v-card>
@@ -23,7 +23,7 @@
 <script>
 ///
 import { required, minLength, email } from 'vuelidate/lib/validators'
-import swal from 'sweetalert';
+import firebase from 'firebase';
 ///
 export default {
     name: 'SignIn',
@@ -41,6 +41,15 @@ export default {
         },
         pass: {
             required
+        }
+    },
+    methods: {
+        acceder(){
+            firebase.auth().signInWithEmailAndPassword(this.email, this.pass).then((data) =>{
+                this.$router.push({path: '/'});
+            } ).catch( error => {
+                console.log(error);
+            })
         }
     }
 }

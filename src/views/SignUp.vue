@@ -52,9 +52,10 @@ export default {
     },
     methods: {
         crearUsuario(){
-            firebase.auth().createUserWithEmailAndPassword(this.usuario.email, this.usuario.pass).then( data => {
-                console.log(data);
+            firebase.auth().createUserWithEmailAndPassword(this.usuario.email, this.usuario.pass).then( () => {
                 db.collection(this.usuario.email).doc('perfil').set(this.usuario).then( () => {
+                    swal("Usuario creado", "success");
+                    this.$router.push({path: '/'});
                 }).catch(error => {
                     console.log(error);
                 })
