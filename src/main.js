@@ -3,18 +3,23 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
-
-Vue.config.productionTip = false;
-//Vuelidate
+//axios
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+//vuelidate
 import Vuelidate from 'vuelidate'
-Vue.use(Vuelidate);
-
 //Firebase
 var firebase = require("firebase/app");
-
 // Add the Firebase products that you want to use
 require("firebase/auth");
 require("firebase/firestore");
+//Vue
+Vue.config.productionTip = false;
+
+//Vuelidate
+Vue.use(Vuelidate, VueAxios, axios);
+
+
 
 var firebaseConfig = {
     apiKey: "AIzaSyA70Ro-SvJvurdV8pFYxwUn6a1MHm1uI8k",

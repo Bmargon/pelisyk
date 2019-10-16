@@ -6,8 +6,17 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        usuario: ''
+        user: ''
     },
-    mutations: {},
-    actions: {}
+    mutations: {
+        pasarUsuario(state, usuario) {
+            state.user = usuario;
+            console.log(usuario);
+        }
+    },
+    actions: {
+        getUser({ commit }, usuario) {
+            commit('pasarUsuario', usuario);
+        }
+    }
 });

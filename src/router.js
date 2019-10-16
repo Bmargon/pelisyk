@@ -12,8 +12,21 @@ const router = new Router({
             name: 'dashboard',
             component: () =>
                 import ('./views/Dashboard.vue'),
-            meta: { requiresAuth: true }
+            children: [{
+                    path: '/peliculas',
+                    name: 'peliculas',
+                    component: () =>
+                        import ('./views/content/Peliculas.vue'),
 
+                },
+                {
+                    path: '/series',
+                    name: 'series',
+                    component: () =>
+                        import ('./views/content/Series.vue')
+                }
+            ],
+            meta: { requiresAuth: true }
         },
         {
             path: '/signin',

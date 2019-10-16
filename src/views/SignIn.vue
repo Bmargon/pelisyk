@@ -24,6 +24,8 @@
 ///
 import { required, minLength, email } from 'vuelidate/lib/validators'
 import firebase from 'firebase';
+var db = firebase.firestore();
+import { mapActions } from 'vuex';
 ///
 export default {
     name: 'SignIn',
@@ -44,10 +46,17 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['getUser']),
         acceder(){
-            firebase.auth().signInWithEmailAndPassword(this.email, this.pass).then((data) =>{
+            firebase.auth().signInWithEmailAndPassword(this.email, this.pass).then(() =>{
+                db.collection(this.email).get().then((user) => {
+                    user.forEach((doc) => {
+                        let usuario = doc.data();
+                        this.getUser(usuario);
+                    });
+                })
                 this.$router.push({path: '/'});
-            } ).catch( error => {
+            }).catch( error => {
                 console.log(error);
             })
         }
