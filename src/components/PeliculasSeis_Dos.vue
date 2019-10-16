@@ -1,8 +1,8 @@
 <template>
     <div class="card">
         <div class="cards">
-            <v-card class="card" :key="peli.id" outlined v-for="peli of peliculas">
-                <v-img class="poster" :src="'https://image.tmdb.org/t/p/w500'+peli.poster_path"></v-img>
+            <v-card class="card" :to="{name: 'peli', params: {id: peli.id}}" :key="peli.id" outlined v-for="peli of peliculas">
+                <v-img  class="poster" :src="'https://image.tmdb.org/t/p/w500'+peli.poster_path"></v-img>
                 <h3>{{peli.original_title}}</h3>
                   <v-chip
                     class="ma-2 nota"
@@ -28,8 +28,8 @@ export default {
         }
     },
     methods: {
-       async getPeliculasPopulares(tipo){
-           var url = `https://api.themoviedb.org/3/movie/${tipo}/?api_key=9146c1d352b164fffa6551c7d81804ab&language=es-ES`;
+       async getPeliculasPopulares(tipo, contenido){
+           var url = `https://api.themoviedb.org/3/${contenido}/${tipo}/?api_key=9146c1d352b164fffa6551c7d81804ab&language=es-ES`;
            this.peliculas = await axios.get(url).then( data => {
                
                return data.data.results.slice(0, 12);
@@ -37,9 +37,9 @@ export default {
        }
     },
     created() {
-        this.getPeliculasPopulares(this.tipo)
+        this.getPeliculasPopulares(this.tipo, this.contenido)
     },
-    props: ['tipo']
+    props: ['tipo', 'contenido']
 }
 </script>
 <style>

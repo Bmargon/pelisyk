@@ -2,14 +2,14 @@
     <div>
         <h1>Películas: </h1>
         <h2 >Del momento:</h2>
-            <seisPorDos class="containerMovies" :tipo="'popular'" ></seisPorDos>
+            <seisPorDos class="containerMovies" :contenido="'movie'" :tipo="'popular'" ></seisPorDos>
         <hr>
         <h2 >Películas mejor puntuadas:</h2>
-            <seisPorDos class="containerMovies" :tipo="'top_rated'" ></seisPorDos>
+            <seisPorDos class="containerMovies" :contenido="'movie'" :tipo="'top_rated'" ></seisPorDos>
         <hr>
             <h2 >Ahora en cines:</h2>
 
-            <seisPorDos class="containerMovies" :tipo="'now_playing'" ></seisPorDos>
+            <seisPorDos class="containerMovies" :contenido="'movie'" :tipo="'now_playing'" ></seisPorDos>
         
     </div>
 </template>

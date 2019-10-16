@@ -10,6 +10,7 @@
         <v-btn :to="{path: '/'}" text>Inicio</v-btn>
         <v-btn :to="{name: 'peliculas'}">Peliculas</v-btn>
         <v-btn :to="{name: 'series'}" text>Series</v-btn>
+        <v-btn :to="{name: 'perfil'}" text>Perfil</v-btn>
       </v-toolbar-items>
       <template v-if="$vuetify.breakpoint.smAndUp">
 

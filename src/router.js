@@ -8,26 +8,44 @@ const router = new Router({
     mode: "history",
     base: process.env.BASE_URL,
     routes: [{
+            // RUTAS PROTEGIDAS
             path: '/',
             name: 'dashboard',
             component: () =>
                 import ('./views/Dashboard.vue'),
             children: [{
+                    // Peliculas
                     path: '/peliculas',
                     name: 'peliculas',
                     component: () =>
-                        import ('./views/content/Peliculas.vue'),
+                        import ('./views/content/Peliculas.vue')
 
                 },
+                {
+                    path: '/peli/:id',
+                    name: 'peli',
+                    component: () =>
+                        import ('./views/content/Single/Peli.vue')
+
+                },
+
+                // Series
                 {
                     path: '/series',
                     name: 'series',
                     component: () =>
                         import ('./views/content/Series.vue')
+                },
+                {
+                    path: '/perfil',
+                    name: 'perfil',
+                    component: () =>
+                        import ('./views/Profile.vue')
                 }
             ],
             meta: { requiresAuth: true }
         },
+        // INICIO DE SESION Y REGISTRO
         {
             path: '/signin',
             name: 'signin',
@@ -44,8 +62,8 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    const rutaProtegida = to.matched.some(record => record.meta.requiresAuth);
-    const user = firebase.auth().currentUser;
+    var rutaProtegida = to.matched.some(record => record.meta.requiresAuth);
+    var user = firebase.auth().currentUser;
 
     if (rutaProtegida === true && user === null) {
         next({ name: 'signin' });
