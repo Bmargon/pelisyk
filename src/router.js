@@ -21,8 +21,8 @@ const router = new Router({
                         import ('./views/content/Movies.vue'),
                     // Subcategorias random movies
                     children: [{
-                            path: '',
-                            name: '',
+                            path: '/peliculas',
+                            name: 'peliculas',
                             component: () =>
                                 import ('./views/content/movies/General.vue')
                         },
