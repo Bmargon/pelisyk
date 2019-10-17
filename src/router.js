@@ -14,11 +14,37 @@ const router = new Router({
             component: () =>
                 import ('./views/Dashboard.vue'),
             children: [{
-                    // Peliculas
+                    // Peliculas Master
                     path: '/peliculas',
                     name: 'peliculas',
                     component: () =>
-                        import ('./views/content/Peliculas.vue')
+                        import ('./views/content/Movies.vue'),
+                    // Subcategorias random movies
+                    children: [{
+                            path: '',
+                            name: '',
+                            component: () =>
+                                import ('./views/content/movies/General.vue')
+                        },
+                        {
+                            path: 'populares',
+                            name: 'popmov',
+                            component: () =>
+                                import ('./views/content/movies/Populares.vue')
+                        },
+                        {
+                            path: 'rated',
+                            name: 'ratmov',
+                            component: () =>
+                                import ('./views/content/movies/Rate.vue')
+                        },
+                        {
+                            path: 'actual',
+                            name: 'actmov',
+                            component: () =>
+                                import ('./views/content/movies/Actual.vue')
+                        }
+                    ]
 
                 },
                 {
@@ -52,7 +78,7 @@ const router = new Router({
                         import ('./views/Profile.vue')
                 }
             ],
-            meta: { requiresAuth: true }
+            // meta: { requiresAuth: true }
         },
         // INICIO DE SESION Y REGISTRO
         {
