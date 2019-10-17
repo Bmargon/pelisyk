@@ -7,6 +7,7 @@
 <script>
 ///
 import information from '../../../components/Info.vue'
+import axios from 'axios';
 ///
 export default {
     name: 'peliDetails',
