@@ -11,7 +11,8 @@ export default new Vuex.Store({
     mutations: {
         pasarUsuario(state, usuario) {
             state.user = usuario;
-        }
+        },
+
     },
     actions: {
         getUser({ commit }, usuario) {
