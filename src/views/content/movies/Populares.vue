@@ -1,14 +1,30 @@
 <template>
     <div class="main">
-        <h1>hola</h1>
+       <seisPorDos class="containerMovies" :format="'movie'" :genre="'popular'" ></seisPorDos>
+        
     </div>
 </template>
 
 <script>
-    export default {
-        name: 'peliculasPopulares'
+///
+import seisPorDos from '../../../components/InfoCels.vue';
+///
+export default {
+    name: 'peliculasPopulares',
+   
+    components: {
+        seisPorDos
     }
-</script>
-<style>
 
+}
+</script>
+
+<style>
+.containerMovies{
+    width: 100%;
+    height: auto;
+}
+.btn {
+    text-align: center;
+}
 </style>

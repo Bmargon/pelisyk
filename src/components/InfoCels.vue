@@ -14,6 +14,8 @@
                     label
                     >{{item.vote_average}}</v-chip>
             </v-card>
+
+            <v-btn @click="sumar" v-if="getUrl">ddddddd</v-btn>
         </div>
     </div>
 </template>
@@ -26,17 +28,29 @@ export default {
     name: 'generalInfoContainer',
     data() {
         return {
-            items: ''
+            items: '',
+            page: 1
         }
     },
     methods: {
         // Get titles up to 12
-       async getMassiveContent(genre, format){
-           var url = `https://api.themoviedb.org/3/${format}/${genre}/?api_key=9146c1d352b164fffa6551c7d81804ab&language=es-ES`;
+       async getMassiveContent(genre, format, page){
+           var url = `https://api.themoviedb.org/3/${format}/${genre}/?api_key=9146c1d352b164fffa6551c7d81804ab&language=es-ES&page=${page}`;
            this.items = await axios.get(url).then( data => {
-               return data.data.results.slice(0, 12);
+               if (this.$route.name === 'peliculas') {
+                    return data.data.results.slice(0, 12);
+               } 
+               return data.data.results.slice(0, 18);
            });
-       }
+       },
+       getUrl() {
+            return this.$route.name === 'peliculas' ? true : false;
+        },
+        sumar() {
+            var page = this.page += 1 ;
+            this.getMassiveContent(this.genre, this.format, page)
+
+        }
     },
     computed: {
         router() {
@@ -49,9 +63,11 @@ export default {
         } 
     },
     created() {
-        this.getMassiveContent(this.genre, this.format);
+        this.getMassiveContent(this.genre, this.format, this.page)
+        
     },
     props: ['genre', 'format']
+
 }
 </script>
 <style>
