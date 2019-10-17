@@ -37,6 +37,15 @@ const router = new Router({
                         import ('./views/content/Series.vue')
                 },
                 {
+                    path: '/tv/:id',
+                    name: 'tv',
+                    component: () =>
+                        import ('./views/content/Single/Tv.vue')
+
+                },
+
+                // Perfil
+                {
                     path: '/perfil',
                     name: 'perfil',
                     component: () =>
