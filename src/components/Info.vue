@@ -1,8 +1,10 @@
 <template>
     <div class="main">
         <div >
-            <img class="backdrop" :src="'https://image.tmdb.org/t/p/original'+item.backdrop_path">
-            <div class="info">
+            <div class="dark">
+                <img class="backdrop" :src="'https://image.tmdb.org/t/p/original'+item.backdrop_path">
+            </div>
+            <div class="details">
                     <img class="poster-img" :src="'https://image.tmdb.org/t/p/w500'+item.poster_path">
                    <div class="item-info">
                         <h1>{{item.original_title}}</h1>
@@ -36,16 +38,33 @@ export default {
             }).catch((error) => {
                 console.log(error);
             })
+        },
+        getParams(){
+            
+            var param = this.$route.name;
+            var tipo = '';
+            switch (param) {
+                case 'peli':
+                     tipo = 'movie'
+                    break;
+                case 'tv':
+                    tipo = 'tv'
+                    break;
+            }
+            this.getInfo(tipo);
         }
     },
     created(){
-        this.getInfo('movie');
-    }
+        this.getParams(); 
+        }
+    
 }
 </script>
 
 <style>
-
+.dark{
+    background-color: black;
+}
 
 .poster-img{
     height: 240px;
@@ -55,12 +74,10 @@ export default {
 .backdrop{
     position: relative;
     width: 100%;
-    opacity: 0.8;
+    opacity: 0.5;
 }
-.info, .v-application{
-    background: none !important;
-}
-.info{
+
+.details{
     position: absolute;
     display: flex;
     flex-direction: row;
@@ -68,12 +85,11 @@ export default {
     z-index: 2;
     bottom: 60px;
     left: 60px;
-    background: none ;
 }
 .item-info{
     color: white ;
     margin-left: 2rem;
-    max-width: 600px;
+    max-width: 60%;
 }
 h1, h4 {
     color: white;
