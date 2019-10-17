@@ -24,7 +24,5 @@ export default {
     width: 100%;
     height: auto;
 }
-.btn {
-    text-align: center;
-}
+
 </style>

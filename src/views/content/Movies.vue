@@ -24,10 +24,10 @@ export default {
                 case 'popmov':
                     return 'Películas más populares';
                     break;
-                case 'rated':
+                case 'ratmov':
                     return 'Películas mejor valoradas';
                     break;
-                case 'actual':
+                case 'actmov':
                     return 'Películas en cines';
                     break;
             }

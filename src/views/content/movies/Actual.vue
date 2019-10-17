@@ -1,11 +1,26 @@
 <template>
     <div>
-        <h1>peliculas en cines</h1>
+       <seisPorDos class="containerMovies" :format="'movie'" :genre="'top_rated'" ></seisPorDos>
     </div>
 </template>
 
 <script>
+///
+import seisPorDos from '../../../components/InfoCels.vue';
+///
 export default {
-    name:'Actual'
+    name:'Actual',
+        components: {
+        seisPorDos
+    }
 }
 </script>
+
+
+<style>
+.containerMovies{
+    width: 100%;
+    height: auto;
+}
+
+</style>

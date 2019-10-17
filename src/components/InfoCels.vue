@@ -15,7 +15,7 @@
                     >{{item.vote_average}}</v-chip>
             </v-card>
 
-            <v-btn @click="sumar" v-if="getUrl">ddddddd</v-btn>
+            <v-btn @click="sumar" v-if="!getUrl">Ver Más</v-btn>
         </div>
     </div>
 </template>
@@ -38,14 +38,12 @@ export default {
            var url = `https://api.themoviedb.org/3/${format}/${genre}/?api_key=9146c1d352b164fffa6551c7d81804ab&language=es-ES&page=${page}`;
            this.items = await axios.get(url).then( data => {
                if (this.$route.name === 'peliculas') {
-                    return data.data.results.slice(0, 12);
+                    return data.data.results.slice(0, 6);
                } 
                return data.data.results.slice(0, 18);
            });
        },
-       getUrl() {
-            return this.$route.name === 'peliculas' ? true : false;
-        },
+        // Get new page
         sumar() {
             var page = this.page += 1 ;
             this.getMassiveContent(this.genre, this.format, page)
@@ -53,9 +51,18 @@ export default {
         }
     },
     computed: {
+        // Show button
+        getUrl() {
+             if (this.$route.name === 'peliculas') {
+                return true;
+            } else{
+                return false;
+            }
+        },
+        // pelicula o serie? router a esa pagina
         router() {
-          if (this.$route.name === 'peliculas') {
-              return 'peli';
+          if (this.$route.name === 'peliculas' | this.$route.name === 'popmov' | this.$route.name === 'ratmov' | this.$route.name === 'actmov') {
+                return 'peli';
 
             }else {
                 return 'tv'
@@ -63,9 +70,9 @@ export default {
         } 
     },
     created() {
-        this.getMassiveContent(this.genre, this.format, this.page)
-        
+        this.getMassiveContent(this.genre, this.format, this.page);        
     },
+    // tipos de contenido a los que hacer el get
     props: ['genre', 'format']
 
 }
